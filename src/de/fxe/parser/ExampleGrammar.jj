@@ -1,0 +1,326 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */
+options
+{
+  JDK_VERSION = "1.7";
+  static = false;
+}
+
+PARSER_BEGIN(Regras)
+package de.fxe.parser;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Regras
+{
+  /*
+  public static void main(String args []) throws ParseException
+  {
+    Regras parser = new Regras(System.in);
+
+      System.out.println("Reading from standard input...");
+      System.out.print("Enter an expression like \"1+(2+3)*4;\" :");
+      try
+      {
+        System.out.println( Regras.def());
+      }
+      catch (Exception e)
+      {
+        System.out.println("NOK.");
+        System.out.println(e.getMessage());
+        Regras.ReInit(System.in);
+      }
+      catch (Error e)
+      {
+        System.out.println("Oops.");
+        System.out.println(e.getMessage());
+      }
+    }
+  */
+}
+
+PARSER_END(Regras)
+
+SKIP :
+{
+  " "
+| "\r"
+| "\t"
+| "\n"
+} 
+TOKEN :
+{
+ < GENE : "K"(["0"-"9"])+(("+"|"-")"K"(["0"-"9"])+)* >
+}
+
+/* DEFINITION - > DEF_ELEMENT
+ *              | DEFINITION DEF_ELEMENT
+ *
+ * JavaCC
+ * DEFINITION - > (DEF_ELEMENT)+
+ */
+List<List<String >> parseDefinition() :
+{
+   List<List<String >> def = new ArrayList<List<String >>();
+   List<List<String >> r_elems;
+}
+{
+  (
+    r_elems = DEF_ELEMENT()
+    {
+		for(List<String > l : r_elems)
+		{
+			def.add(l);
+		}
+    }
+  )+
+  < EOF >
+  {
+	 return def;
+  }
+}
+
+/* DEF_ELEMENT - > EXPR
+ *               | DEF_ELEMENT '+' EXPR ///DEF_ELEMENT OP EXPR
+ *
+ * JavaCC
+ * DEF_ELEMENT - > EXPR ('+' EXPR)*
+ */
+List<List<String >> DEF_ELEMENT() :
+{
+  List<List<String >> r_;
+  List<List<List<String >>> r = new ArrayList<List<List<String >>> ();
+}
+{
+  r_ = EXPR() { r.add(r_);}
+  ("+" r_ = EXPR() { r.add(r_); }  )*
+  {
+    //System.out.println(r);
+    //r_.clear();
+    //r_.add(AuxUtilities.cartStringConcatProd(r));
+    return AuxUtilities.cartStringConcatProd2(r);
+  }
+}
+
+/* EXPR - > GENE
+ *        | '(' ELEMS ')'
+ *
+ * JavaCC
+ * EXPR - > GENE | '(' ELEMS ')'
+ */
+List<List<String >> EXPR() :
+{	List<List<String >> exprElements;
+	String gTok = null;
+}
+{   gTok = gene()   {
+        List<String > singleTon = new ArrayList<String >();
+   	 	singleTon.add(gTok);
+   	 	exprElements = new ArrayList<List<String >>();
+     	exprElements.add(singleTon);
+     	return exprElements;   } | "(" exprElements = elems() ")"
+   {	 return exprElements;
+   }
+}
+
+List<List<String >> elems() :
+{
+  List<List<String >> elems = new ArrayList<List<String >>();
+  List<List<String >> e1;
+  List<List<String >> eX;
+  List<List<List<String >>> seq = new ArrayList<List<List<String >>>();
+}
+{
+  e1 = elem()
+  ( "," eX = elem()
+  	{
+  	    seq.add(eX);
+  	}
+  )*
+  {
+     seq.add(e1);
+    //System.out.println("SEQ: " + seq);
+	elems = AuxUtilities.cartProd(seq);
+    
+//     if (seq.size() == 2)
+//     {
+//       for (int i = 0; i < seq.get(0).size(); i++)
+//       {
+//         List<String > element = new ArrayList<String >();
+//         element.add(seq.get(0).get(i));
+//         //String p1 = seqs.get(0).get(i);
+//         for (int j = 0; j < seq.get(1).size(); j++)
+//         {
+//           //String p2 = seqs.get(1).get(j);
+//           //String par = p1 + "+" + p2;
+//           element.add(seq.get(1).get(i));
+//         }
+//         elems.add(element);
+//       }
+//     } else
+//     {
+//		System.err.println("not yet implemented.");
+//     }
+	//elems.add(seq);
+	// [ [K02594, K01655] ]
+	// [ [K16792+K16793, K01681], [K16792+K16793, K01705] ]
+	// [ [K14187, K04517+K13853, K04517+K06209, K00210+K13853, K00210+K06209] ]
+	return elems;
+  }
+}
+
+List<List<String >> elem() :
+{
+  String g = null;
+  List<List<String >> multiple_terms = null;
+}
+{
+  (
+    
+  g = gene()
+  | "(" multiple_terms = aux()
+  
+)
+  {
+    if ( g != null)
+    {
+		List<String > singleton = new ArrayList<String >();
+		singleton.add(g);
+		multiple_terms = new ArrayList<List<String >>();
+		multiple_terms.add(singleton);
+    }
+    //System.out.println("ELEMENTS:" + multiple_terms);
+	return multiple_terms;
+  }
+}
+
+List<List<String >> aux() :
+{
+  	List<List<String >> ret = new ArrayList< List<String >>();
+	List<List<String >> term_ret = null;
+}
+{
+  (
+    
+  term_ret = multiplos()
+  {
+	for (List<String > elem : term_ret)
+	{
+	  List<String > singleTon = new ArrayList< String >();
+	  singleTon.addAll(elem);
+	  ret.add(singleTon);
+	}
+  }
+| term_ret = complexo()
+{
+  ret.addAll(term_ret);
+}
+  
+  )
+{
+	return ret;
+}
+}
+
+List<List<String >> multiplos() :
+{
+   List<List<String >> multiplos = new ArrayList<List<String >>();
+   List<List<String >> multi = new ArrayList<List<String >>();
+   List<String > g = new ArrayList<String >();
+   String genne =null;
+}
+{
+    (
+      genne=gene()
+      {
+        List<String > aux = new ArrayList<String >();
+        aux.add(genne);
+        multiplos.add(aux);
+        //g.add(genne);
+      }
+    )+
+      ")"
+    {
+      
+        //multiplos.add(g);
+        //multiplos=cartesianProduct(multi);
+		return multiplos;
+    }
+}
+
+List<List<String >> complexo() :
+{
+	List<List<String >> comb = new ArrayList<List<String >>();
+	List<List<String >> seqs = new ArrayList< List<String >>();
+	List<String > seq_head;
+	List<String > seq_resto;
+}
+{
+   "(" seq_head = genes() ")"
+  ("+" "(" seq_resto = genes() ")"
+  {
+    seqs.add(seq_resto);
+  }
+  )+ ")"
+  {
+     seqs.add(seq_head);
+ //  comb=cartesianProduct(seqs);
+//   return comb;
+	//System.out.println("LOL" + seqs);
+	List<String > l_par = new ArrayList<String > ();
+     if (seqs.size() == 2)
+     {
+       for (int i = 0; i < seqs.get(0).size(); i++)
+       {
+         String p1 = seqs.get(0).get(i);
+         for (int j = 0; j < seqs.get(1).size(); j++)
+         {
+           String p2 = seqs.get(1).get(j);
+           String par = p1 + "+" + p2;
+           ;
+           l_par.add(par);
+           
+           //comb.add( par);
+         }
+       }
+   comb.add(l_par);
+     }else
+     {
+		System.err.println("not yet implemented." + seqs);
+     }
+     
+	 return comb;
+  }
+}
+
+List<String > genes() :
+{
+  List<String > gs = new ArrayList<String >();
+  String head;
+  String g;
+}
+{
+	head = gene()
+	( "," g = gene()
+	{
+	  gs.add(g);
+	}
+	
+	)*
+	{
+	  	gs.add(head);
+		return gs;
+	}
+}
+
+String gene() :
+{
+  Token t1;
+}
+{
+  t1 = < GENE >
+  {
+	return t1.toString();
+  }
+}
