@@ -100,7 +100,7 @@ List<List<String >> DEF_ELEMENT() :
     //System.out.println(r);
     //r_.clear();
     //r_.add(AuxUtilities.cartStringConcatProd(r));
-    return AuxUtilities.cartStringConcatProd2(r);
+    return AuxUtilities.cartStringConcatProd2(r, "+");
   }
 }
 

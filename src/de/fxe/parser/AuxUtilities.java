@@ -31,14 +31,14 @@ public class AuxUtilities {
 	public static<T> List<List<T>> cartProd(List < List<List<T>>> listOfList) {
 		if (listOfList.size() < 2) return listOfList.get(0);
 		
-		List< List<T>> r = cartesianProduct_(listOfList.get(0), listOfList.get(1));
+		List< List<T>> r = cartesianProduct(listOfList.get(0), listOfList.get(1));
 		for (int i = 2; i < listOfList.size(); i++) {
-			r = cartesianProduct_(r, listOfList.get(i));
+			r = cartesianProduct(r, listOfList.get(i));
 		}
 		return r;
 	}
 	
-	public static<T> List<List<T>> cartesianProduct_(List<List<T>> set1, List<List<T>> set2) {
+	public static<T> List<List<T>> cartesianProduct(List<List<T>> set1, List<List<T>> set2) {
 		List< List<T>> ret = new ArrayList< List<T>>();
 		for ( int i = 0; i < set1.size(); i++) {
 			for ( int j = 0; j < set2.size(); j++) {
@@ -51,45 +51,45 @@ public class AuxUtilities {
 		return ret;
 	}
 	
-	public static List<String> cartStringConcatProd(List<List<String>> listOfList) {
+	public static List<String> cartStringConcatProd(List<List<String>> listOfList, String op) {
 		if ( listOfList.size() < 2) return listOfList.get(0);
 		
-		List< String> r = cartStringConcatProd_(listOfList.get(0), listOfList.get(1));
+		List< String> r = cartStringConcatProd(listOfList.get(0), listOfList.get(1), op);
 		for (int i = 2; i < listOfList.size(); i++) {
-			r = cartStringConcatProd_(r, listOfList.get(i));
+			r = cartStringConcatProd(r, listOfList.get(i), op);
 		}
 		return r;
 	}
 	
-	public static List<String> cartStringConcatProd_(List<String> set1, List<String> set2) {
+	public static List<String> cartStringConcatProd(List<String> set1, List<String> set2, String op) {
 		List< String> ret = new ArrayList< String>();
 		for ( int i = 0; i < set1.size(); i++) {
 			String str_i = set1.get(i);
 			for ( int j = 0; j < set2.size(); j++) {
 				String str_j = set2.get(j);
-				ret.add(str_i + "+" + str_j);
+				ret.add(str_i + op + str_j);
 			}
 		}
 		return ret;
 	}
 	
-	public static List< List<String>> cartStringConcatProd2(List<List< List<String>>> listOfList) {
+	public static List< List<String>> cartStringConcatProd2(List<List< List<String>>> listOfList, String op) {
 		if ( listOfList.size() < 2) return listOfList.get(0);
 		
-		List< List<String>> r = cartStringConcatProd2_(listOfList.get(0), listOfList.get(1));
+		List< List<String>> r = cartStringConcatProd2(listOfList.get(0), listOfList.get(1), op);
 		for (int i = 2; i < listOfList.size(); i++) {
-			r = cartStringConcatProd2_(r, listOfList.get(i));
+			r = cartStringConcatProd2(r, listOfList.get(i), op);
 		}
 		return r;
 	}
 	
-	public static List< List<String>> cartStringConcatProd2_(List< List<String>> set1, List< List<String>> set2) {
+	public static List< List<String>> cartStringConcatProd2(List< List<String>> set1, List< List<String>> set2, String op) {
 		List< List<String>> ret = new ArrayList< List<String>>();
 		for ( int i = 0; i < set1.size(); i++) {
 			List<String> l_i = set1.get(i);
 			for ( int j = 0; j < set2.size(); j++) {
 				List<String> l_j = set2.get(j);
-				ret.add( cartStringConcatProd_(l_i, l_j));
+				ret.add( cartStringConcatProd(l_i, l_j, op));
 			}
 		}
 		return ret;
@@ -112,16 +112,16 @@ public class AuxUtilities {
 		System.out.println( l1);
 		System.out.println( l2);
 		System.out.println( l3);
-		
+		l3.get( l3.size() - 1);
 		List< List< List< String>>> l1Xl2 = new ArrayList< List <List< String>>> ();
 		l1Xl2.add(l1); l1Xl2.add(l2);
-		System.out.println( cartStringConcatProd2(l1Xl2));
+		System.out.println( cartStringConcatProd2(l1Xl2, "+"));
 		List< List< List< String>>> l3Xl2 = new ArrayList< List <List< String>>> ();
 		l3Xl2.add(l3); l3Xl2.add(l2);
-		System.out.println( cartStringConcatProd2(l3Xl2));
+		System.out.println( cartStringConcatProd2(l3Xl2, "+"));
 		List< List< List< String>>> l3Xl1 = new ArrayList< List <List< String>>> ();
 		l3Xl1.add(l3); l3Xl1.add(l1);
-		System.out.println( cartStringConcatProd2(l3Xl1));
+		System.out.println( cartStringConcatProd2(l3Xl1, "#"));
 		//l1.add("B");
 		//List<String> l2 = new ArrayList<String> ();
 		//l2.add("X");

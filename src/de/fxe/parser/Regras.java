@@ -38,7 +38,7 @@ public class Regras implements RegrasConstants {
   }
 
 /* DEF_ELEMENT - > EXPR
- *               | DEF_ELEMENT '+' EXPR
+ *               | DEF_ELEMENT '+' EXPR ///DEF_ELEMENT OP EXPR
  *
  * JavaCC
  * DEF_ELEMENT - > EXPR ('+' EXPR)*
@@ -65,7 +65,7 @@ public class Regras implements RegrasConstants {
     //System.out.println(r);
     //r_.clear();
     //r_.add(AuxUtilities.cartStringConcatProd(r));
-    {if (true) return AuxUtilities.cartStringConcatProd2(r);}
+    {if (true) return AuxUtilities.cartStringConcatProd2(r, "+");}
     throw new Error("Missing return statement in function");
   }
 
