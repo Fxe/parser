@@ -42,6 +42,7 @@ public class TestKEGGOrthlogyParser {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		KEGGOrthologyParser.VERBOSE = false;
 	}
 
 	@Test

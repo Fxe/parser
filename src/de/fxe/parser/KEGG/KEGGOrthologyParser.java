@@ -8,6 +8,7 @@ import de.fxe.parser.AuxUtilities;
 
 //@SuppressWarnings("unused")
 public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
+  public static boolean VERBOSE = false;
 
   final public List<List<String >> parseDefinition() throws ParseException {
   List<List<String >> aux;
@@ -15,7 +16,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
     label_1:
     while (true) {
       aux = DEF_ELEMENT();
-                System.out.println("DEF_ELEMENT: " + aux);
+        if (VERBOSE) System.out.println("DEF_ELEMENT: " + aux);
                 ret.addAll(aux);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ID:
@@ -50,9 +51,11 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
       }
       op = OP();
       aux = EXPR();
-          System.out.println(ret);
-          System.out.println(op);
-          System.out.println(aux);
+          if (VERBOSE) {
+            System.out.println(ret);
+            System.out.println(op);
+                System.out.println(aux);
+          }
           ret = AuxUtilities.cartStringConcatProd2(ret, aux, op);
     }
     {if (true) return ret;}
@@ -125,7 +128,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
         jj_consume_token(10);
         aux = DEF_ELEMENT();
       elemSet = AuxUtilities.cartesianProduct(elemSet, aux);
-      System.out.println("ELEMSET:" + elemSet);
+      if (VERBOSE) System.out.println("ELEMSET:" + elemSet);
 
        //List<List<List<String >>> prod = new ArrayList<List<List<String >>> ();
        //List<List<String >> last = 
@@ -148,7 +151,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
       }
     }
     if ( !elemSet.isEmpty()) ret.addAll(elemSet);
-    System.out.println("EXPR_ELEMENTS:" + ret);
+    if (VERBOSE) System.out.println("EXPR_ELEMENTS:" + ret);
         {if (true) return ret;}
     throw new Error("Missing return statement in function");
   }
