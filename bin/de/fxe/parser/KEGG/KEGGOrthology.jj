@@ -14,7 +14,8 @@ public class KEGGOrthologyParser{
   List<List<String >> aux;
   List<List<String >> ret = new ArrayList<List<String >>();
 }{
-  (    aux = DEF_ELEMENT()
+  (
+    (",")*    aux = DEF_ELEMENT()
     {
         if (VERBOSE) System.out.println("DEF_ELEMENT: " + aux);
 		ret.addAll(aux);

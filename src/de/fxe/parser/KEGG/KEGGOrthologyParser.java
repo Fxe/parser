@@ -15,16 +15,29 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
   List<List<String >> ret = new ArrayList<List<String >>();
     label_1:
     while (true) {
+      label_2:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 8:
+          ;
+          break;
+        default:
+          jj_la1[0] = jj_gen;
+          break label_2;
+        }
+        jj_consume_token(8);
+      }
       aux = DEF_ELEMENT();
         if (VERBOSE) System.out.println("DEF_ELEMENT: " + aux);
                 ret.addAll(aux);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ID:
       case 8:
+      case 9:
         ;
         break;
       default:
-        jj_la1[0] = jj_gen;
+        jj_la1[1] = jj_gen;
         break label_1;
       }
     }
@@ -38,7 +51,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
   List<List<String >> aux;
   List<List<String >> ret = null;
     ret = EXPR();
-    label_2:
+    label_3:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
@@ -46,8 +59,8 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
         ;
         break;
       default:
-        jj_la1[1] = jj_gen;
-        break label_2;
+        jj_la1[2] = jj_gen;
+        break label_3;
       }
       op = OP();
       aux = EXPR();
@@ -72,7 +85,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
       op = jj_consume_token(MINUS);
       break;
     default:
-      jj_la1[2] = jj_gen;
+      jj_la1[3] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -92,14 +105,14 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
         ret.add(singleTon);
     {if (true) return ret;}
       break;
-    case 8:
-      jj_consume_token(8);
-      ret = EXPR_ELEMENTS();
+    case 9:
       jj_consume_token(9);
+      ret = EXPR_ELEMENTS();
+      jj_consume_token(10);
     {if (true) return ret;}
       break;
     default:
-      jj_la1[3] = jj_gen;
+      jj_la1[4] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -111,21 +124,21 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
         List<List<String >> elemSet = null;
         List<List<String >> aux = null;
     elemSet = DEF_ELEMENT();
-    label_3:
+    label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ID:
       case 8:
-      case 10:
+      case 9:
         ;
         break;
       default:
-        jj_la1[4] = jj_gen;
-        break label_3;
+        jj_la1[5] = jj_gen;
+        break label_4;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 10:
-        jj_consume_token(10);
+      case 8:
+        jj_consume_token(8);
         aux = DEF_ELEMENT();
       elemSet = AuxUtilities.cartesianProduct(elemSet, aux);
       if (VERBOSE) System.out.println("ELEMSET:" + elemSet);
@@ -138,14 +151,14 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
 
         break;
       case ID:
-      case 8:
+      case 9:
         aux = DEF_ELEMENT();
       ret.addAll(elemSet);
       elemSet.clear();
       elemSet.addAll(aux);
         break;
       default:
-        jj_la1[5] = jj_gen;
+        jj_la1[6] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -172,13 +185,13 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[6];
+  final private int[] jj_la1 = new int[7];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x180,0x60,0x60,0x180,0x580,0x580,};
+      jj_la1_0 = new int[] {0x100,0x380,0x60,0x60,0x280,0x380,0x380,};
    }
 
   /** Constructor with InputStream. */
@@ -192,7 +205,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -206,7 +219,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -216,7 +229,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -226,7 +239,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -235,7 +248,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -244,7 +257,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -300,7 +313,7 @@ public class KEGGOrthologyParser implements KEGGOrthologyParserConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
